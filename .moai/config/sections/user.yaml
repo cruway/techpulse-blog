@@ -1,0 +1,6 @@
+# User Configuration
+# User-specific information and preferences
+
+user:
+  # User name for personalization and commit attribution
+  name: "cruway"

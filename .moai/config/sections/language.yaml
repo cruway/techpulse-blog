@@ -1,0 +1,11 @@
+# Language Configuration
+# Multi-language support for MoAI-ADK
+
+language:
+  conversation_language: "ko"
+  conversation_language_name: "Korean (한국어)"
+  agent_prompt_language: "en"
+  git_commit_messages: "ja"
+  code_comments: "ja"
+  documentation: "ja"
+  error_messages: "en"

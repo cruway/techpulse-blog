@@ -1,0 +1,26 @@
+# Quality Configuration
+# Development methodology and coverage targets
+
+constitution:
+  development_mode: "hybrid"  # ddd | tdd | hybrid
+  enforce_quality: true
+  test_coverage_target: 80
+
+  hybrid_settings:
+    new_features: tdd
+    legacy_refactoring: ddd
+    min_coverage_new: 80
+    min_coverage_legacy: 70
+    preserve_refactoring: true
+
+  lsp_quality_gates:
+    enabled: true
+    plan: { require_baseline: true }
+    run: { max_errors: 0, max_type_errors: 0, max_lint_errors: 0, allow_regression: false }
+    sync: { max_errors: 0, max_warnings: 10, require_clean_lsp: true }
+    cache_ttl_seconds: 5
+    timeout_seconds: 3
+
+  principles:
+    simplicity:
+      max_parallel_tasks: 10
