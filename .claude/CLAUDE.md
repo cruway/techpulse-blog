@@ -79,4 +79,6 @@ GitHub MCP 서버가 연결되어 있으므로, 이슈/PR 관련 작업은 **MCP
 | **Git 워크플로우** | .claude/rules/GIT_WORKFLOW.md | 항상 |
 | **PR 체크리스트** | .claude/rules/PR_CHECKLIST.md | 이슈/PR 작업시 |
 | **프로젝트 필드** | .claude/rules/PROJECT_FIELDS.md | 이슈/PR 작업시 |
+| **작업 분할** | .claude/rules/EPIC_STORY.md | 이슈/PR 작업시 |
+| **CLI 명령어** | .claude/rules/CLI_COMMANDS.md | 이슈/PR 작업시 |
 | **라벨** | .claude/rules/LABELS.md | 이슈/PR 작업시 |

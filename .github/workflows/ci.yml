@@ -1,0 +1,113 @@
+name: Go CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - 'README*.md'
+      - 'CHANGELOG*.md'
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'LICENSE'
+      - 'content/**'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - 'README*.md'
+      - 'CHANGELOG*.md'
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'LICENSE'
+      - 'content/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ==========================================
+  # コード品質検査
+  # ==========================================
+  quality:
+    name: コード品質
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Go セットアップ
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache: true
+
+      - name: 依存関係インストール
+        run: go mod download
+
+      - name: templ インストール
+        run: go install github.com/a-h/templ/cmd/templ@latest
+
+      - name: templ 生成
+        run: templ generate
+
+      - name: フォーマット検査
+        run: |
+          if [ -n "$(gofmt -l .)" ]; then
+            echo "::error::フォーマットされていないファイルがあります"
+            gofmt -l .
+            exit 1
+          fi
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+
+      - name: ビルド確認
+        run: go build ./...
+
+  # ==========================================
+  # テスト
+  # ==========================================
+  test:
+    name: テスト
+    needs: quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Go セットアップ
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache: true
+
+      - name: 依存関係インストール
+        run: go mod download
+
+      - name: templ インストール
+        run: go install github.com/a-h/templ/cmd/templ@latest
+
+      - name: templ 生成
+        run: templ generate
+
+      - name: テスト実行
+        run: go test -v -race -coverprofile=coverage.out ./...
+
+      - name: カバレッジ確認
+        run: |
+          COVERAGE=$(go tool cover -func=coverage.out | tail -1 | awk '{print $3}' | sed 's/%//')
+          echo "## テストカバレッジ: ${COVERAGE}%" >> "$GITHUB_STEP_SUMMARY"
+          echo "カバレッジ: ${COVERAGE}%"
+
+      - name: カバレッジアップロード
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.out
+          fail_ci_if_error: false
+          skip_validation: true

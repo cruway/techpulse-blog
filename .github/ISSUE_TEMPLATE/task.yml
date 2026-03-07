@@ -1,0 +1,83 @@
+name: "Task"
+description: "実装・作業タスク"
+title: "[Task] "
+labels: ["type-feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## タスク
+        具体的な実装・作業タスクです。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: "概要"
+      description: "タスクの簡単な説明"
+      placeholder: "このタスクは..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: "目標"
+      description: "このタスクの目標"
+      placeholder: |
+        - 目標 1
+        - 目標 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: "実装内容"
+      description: "実装する内容の詳細"
+      placeholder: |
+        ### ファイル・モジュール
+        - `internal/xxx/xxx.go` - 説明
+
+        ### 主要変更点
+        - 変更 1
+        - 変更 2
+    validations:
+      required: false
+
+  - type: textarea
+    id: checklist
+    attributes:
+      label: "チェックリスト"
+      description: "完了すべき項目"
+      placeholder: |
+        - [ ] 項目 1
+        - [ ] 項目 2
+        - [ ] テスト作成
+        - [ ] ドキュメント更新
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: "参照"
+      description: "関連ドキュメント、Issue、PR等"
+      placeholder: |
+        - 上位Issue: #1
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: setup_checklist
+    attributes:
+      label: "作成後設定チェックリスト"
+      description: "Issue作成後に必ず完了すべき設定"
+      options:
+        - label: "Assignee設定完了"
+          required: true
+        - label: "ラベル設定完了（type, size, priority）"
+          required: true
+        - label: "マイルストーン設定完了（該当する場合）"
+          required: false
+        - label: "プロジェクトに追加（該当する場合）"
+          required: false

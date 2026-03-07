@@ -1,0 +1,118 @@
+name: "Feat"
+description: "機能実装タスク"
+title: "[Feat] "
+labels: ["type-feature", "priority-medium"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 機能実装
+        機能実装のためのテンプレートです。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: "概要"
+      description: "機能の簡単な説明"
+      placeholder: "この機能は..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: "目標"
+      description: "この機能の目標と期待効果"
+      placeholder: |
+        - 目標 1
+        - 目標 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: "実装内容"
+      description: "具体的な実装項目"
+      placeholder: |
+        ### ファイル・モジュール
+        - `internal/xxx/xxx.go` - 説明
+
+        ### 主要変更点
+        - [ ] 変更 1
+        - [ ] 変更 2
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "完了条件"
+      description: "機能完了と判断できる条件"
+      placeholder: |
+        - [ ] 条件 1
+        - [ ] 条件 2
+        - [ ] テスト作成
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: "参照"
+      description: "関連ドキュメント、Issue、PR等"
+      placeholder: |
+        - 上位Epic: #番号
+        - 依存: #番号
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "優先度"
+      options:
+        - P0（緊急）
+        - P1（高）
+        - P2（普通）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: size
+    attributes:
+      label: "予想規模"
+      options:
+        - XS（2時間以内）
+        - S（半日）
+        - M（1日）
+        - L（1.5〜2日）
+        - XL（3日以上・分割推奨）
+    validations:
+      required: true
+
+  - type: textarea
+    id: estimate
+    attributes:
+      label: "作業量見積"
+      description: "予想作業量"
+      placeholder: |
+        - サイズ: S/M/L
+        - 予想: 半日/1日/1.5日
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: setup_checklist
+    attributes:
+      label: "作成後設定チェックリスト"
+      description: "Issue作成後に必ず完了すべき設定"
+      options:
+        - label: "Assignee設定完了"
+          required: true
+        - label: "ラベル設定完了（type, size, priority）"
+          required: true
+        - label: "マイルストーン設定完了"
+          required: false
+        - label: "上位EpicのSub-issueとして連結"
+          required: false

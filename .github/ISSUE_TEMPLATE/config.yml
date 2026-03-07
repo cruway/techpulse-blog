@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "SPEC ドキュメント"
+    url: "https://github.com/cruway/techpulse-blog/blob/main/SPEC.md"
+    about: "プロジェクト開発仕様書を参照してください"

@@ -1,0 +1,82 @@
+name: "バグレポート"
+description: "バグ報告"
+title: "[Bug] "
+labels: ["type-bug", "priority-high"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## バグレポート
+        バグ報告のためのテンプレートです。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: "概要"
+      description: "バグの簡単な説明"
+      placeholder: "どのようなバグか..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "再現手順"
+      description: "バグ再現のステップ"
+      placeholder: |
+        1. '...'に移動
+        2. '...'をクリック
+        3. エラー発生
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "期待動作"
+      description: "正常に動作すべきこと"
+      placeholder: "本来は..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "実際の動作"
+      description: "実際に発生したこと"
+      placeholder: "実際には..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "環境"
+      description: "OS、ブラウザ、バージョン等"
+      placeholder: |
+        - OS: macOS 15.x
+        - Go: 1.23.x
+        - ブラウザ: Chrome 130
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "ログ・スクリーンショット"
+      description: "エラーログやスクリーンショット"
+      placeholder: "エラーログ..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: "深刻度"
+      options:
+        - Critical（サーバークラッシュ）
+        - High（主要機能不可）
+        - Medium（機能制限）
+        - Low（些細な問題）
+    validations:
+      required: true

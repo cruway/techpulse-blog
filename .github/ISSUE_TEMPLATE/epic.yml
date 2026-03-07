@@ -1,0 +1,117 @@
+name: "Epic"
+description: "大規模機能・フェーズ単位の作業"
+title: "[Epic] "
+labels: ["type-feature", "priority-high", "size-xl"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## エピック
+        複数のFeat Issueを含む大規模機能です。
+
+        **Epic作成後の必須作業：**
+        - Feat IssueをSub-issueとして連結
+        - マイルストーン設定
+        - プロジェクトフィールド設定
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: "概要"
+      description: "エピックの簡単な説明"
+      placeholder: "このエピックは..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: "目標"
+      description: "このエピックの最終目標"
+      placeholder: |
+        - 目標 1
+        - 目標 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: stories
+    attributes:
+      label: "Feat Issue一覧"
+      description: "含まれるFeat Issue（Wave別グループ化）"
+      placeholder: |
+        ### Wave 1: 基盤（依存なし）
+        - [ ] #番号 Feat タイトル
+        - [ ] #番号 Feat タイトル
+
+        ### Wave 2: 拡張（Wave 1 依存）
+        - [ ] #番号 Feat タイトル
+
+        ### Wave 3: 核心（Wave 1, 2 依存）
+        - [ ] #番号 Feat タイトル
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependency_graph
+    attributes:
+      label: "依存関係グラフ"
+      description: "Feat間の依存関係（Mermaidダイアグラム）"
+      placeholder: |
+        ```mermaid
+        graph LR
+            A["#1 マークダウンパーサー"] --> B["#2 ブログレンダリング"]
+            A --> C["#3 検索インデックス"]
+        ```
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "完了条件"
+      description: "エピック完了と判断できる条件"
+      placeholder: |
+        - [ ] 全Feat Issue完了
+        - [ ] 統合テスト通過
+        - [ ] ドキュメント更新完了
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: "参照ドキュメント"
+      description: "関連する設計文書、仕様等"
+      placeholder: |
+        - SPEC.md
+    validations:
+      required: false
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: "リスク要素"
+      description: "予想されるリスクやブロッカー"
+      placeholder: |
+        - リスク 1
+        - リスク 2
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: setup_checklist
+    attributes:
+      label: "作成後設定チェックリスト"
+      description: "Epic Issue作成後に必ず完了すべき設定"
+      options:
+        - label: "Assignee設定完了"
+          required: true
+        - label: "マイルストーン設定完了"
+          required: true
+        - label: "プロジェクトに追加・フィールド設定完了"
+          required: true
+        - label: "ラベル設定完了（phase, size-xl, type-feature）"
+          required: true
+        - label: "Feat IssueをSub-issueとして連結完了"
+          required: true
