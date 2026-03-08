@@ -1,0 +1,38 @@
+# バイナリ
+/bin/
+/server
+/tmp/
+
+# テスト
+coverage.out
+coverage.html
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
+
+# templ生成ファイル
+*_templ.go
+
+# SQLite
+*.db
+*.db-wal
+*.db-shm
+
+# Bleve
+*.bleve/
+
+# Node
+node_modules/
+
+# Air
+build-errors.log
