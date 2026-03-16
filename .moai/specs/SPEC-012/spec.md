@@ -173,6 +173,10 @@ html := buf.String()
 | カバレッジ | 80%以上 |
 | make ci | 全チェック通過 |
 
+**テスト前提条件**: テスト実行前に`templ generate`を実行し、`_templ.go`を最新化すること。
+`make ci`パイプラインの`templ-check`で生成ファイルの差分を検知する。
+go.modにtemplを追加する必要がある（`go get github.com/a-h/templ`）。
+
 ---
 
 ## 6. 受入条件

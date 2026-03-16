@@ -90,9 +90,14 @@ func (s *PostService) SyncContent() error
 2. 各ファイルをparser.ParseFileでPost構造体に変換
 3. ファイル名からSlugを生成（拡張子除去、ケバブケース）
 4. repo.Upsertで保存
+5. DBの全slugを取得
+6. ファイルに対応しないslugをrepo.Deleteで削除（孤立レコード除去）
 ```
 
 **Slug生成規則**: `hello-world.md` → `hello-world`
+
+**削除同期**: ファイルが削除された場合、DB上の対応レコードも削除される。
+これによりファイルシステムとDBの整合性を保証する。
 
 ### 3.5 ListOptionsバリデーション
 
@@ -123,7 +128,8 @@ return nil, fmt.Errorf("ポスト一覧取得失敗: %w", err)
 | TestListByCategory | カテゴリ別一覧 |
 | TestGetAllTags | タグ一覧 |
 | TestGetAllCategories | カテゴリ一覧 |
-| TestSyncContent | ファイル同期（一時ディレクトリ + 実Parser） |
+| TestSyncContent_新規追加 | ファイル同期（一時ディレクトリ + 実Parser） |
+| TestSyncContent_削除同期 | DBにあるがファイルにないレコードが削除される |
 
 ### モックリポジトリ
 

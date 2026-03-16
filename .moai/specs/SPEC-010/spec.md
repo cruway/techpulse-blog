@@ -39,11 +39,16 @@ CGO不要のmodernc.org/sqliteドライバを使用する。
 
 ```go
 import (
-    "modernc.org/sqlite"  // CGO不要のSQLiteドライバ
+    "database/sql"
+    _ "modernc.org/sqlite"  // ドライバ名: "sqlite"
 )
+
+// 接続例
+db, err := sql.Open("sqlite", dbPath)
 ```
 
 **選定理由**: Oracle Cloud Always Free環境でCGOビルドが困難。modernc.org/sqliteは純Go実装。
+**ドライバ登録名**: `"sqlite"`（`_ "modernc.org/sqlite"` のimportで自動登録）
 
 ### 3.2 パッケージ構造
 
