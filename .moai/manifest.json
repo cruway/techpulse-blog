@@ -1,0 +1,39 @@
+{
+  "version": "2.4.7",
+  "deployed_at": "2026-03-16T00:00:00Z",
+  "project": {
+    "name": "techpulse-blog",
+    "mode": "personal",
+    "initialized": true,
+    "optimized": false
+  },
+  "config": {
+    "sections": [
+      "config/sections/user.yaml",
+      "config/sections/language.yaml",
+      "config/sections/quality.yaml",
+      "config/sections/project.yaml",
+      "config/sections/workflow.yaml",
+      "config/sections/git-convention.yaml",
+      "config/sections/git-strategy.yaml",
+      "config/sections/mx.yaml",
+      "config/sections/system.yaml",
+      "config/sections/statusline.yaml"
+    ]
+  },
+  "project_docs": [
+    "project/product.md",
+    "project/tech.md",
+    "project/structure.md"
+  ],
+  "specs_dir": "specs/",
+  "directories": {
+    "config": "config/sections/",
+    "project": "project/",
+    "specs": "specs/",
+    "docs": "docs/",
+    "logs": "logs/",
+    "temp": "temp/",
+    "cache": "cache/"
+  }
+}
