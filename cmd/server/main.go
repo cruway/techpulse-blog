@@ -45,7 +45,15 @@ func setupServer() *echo.Echo {
 	e.HideBanner = true
 
 	// ミドルウェア設定
-	e.Use(middleware.Logger())
+	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
+		LogURI:    true,
+		LogStatus: true,
+		LogMethod: true,
+		LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
+			log.Printf("%s %s %d", v.Method, v.URI, v.Status)
+			return nil
+		},
+	}))
 	e.Use(middleware.Recover())
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
 		Level: 5,
