@@ -1,4 +1,4 @@
-.PHONY: build run test lint fmt clean dev
+.PHONY: build run test lint fmt clean dev ci ci-quick
 
 # ビルド設定
 BINARY_NAME=server
@@ -41,6 +41,22 @@ fmt:
 # templ生成
 templ:
 	templ generate
+
+# ローカルCI（GitHub Actions相当の全チェック）
+ci: fmt lint build test
+	@echo ""
+	@echo "=== ローカルCI 全チェック通過 ==="
+
+# ローカルCI（高速版：フォーマット確認 + vet + テストのみ）
+ci-quick:
+	@echo "=== フォーマット確認 ==="
+	@test -z "$$(gofmt -l .)" || (echo "フォーマットエラー:"; gofmt -l .; exit 1)
+	@echo "=== go vet ==="
+	go vet ./...
+	@echo "=== テスト ==="
+	go test -race -cover ./...
+	@echo ""
+	@echo "=== ローカルCI（高速版）通過 ==="
 
 # クリーン
 clean:

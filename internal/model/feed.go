@@ -4,8 +4,11 @@ import "time"
 
 // FeedItem はRSSフィードから取得した記事を表す構造体です（Phase 3用）。
 type FeedItem struct {
-	// ID はデータベース上の一意な識別子です。
-	ID int64
+	// PublishedAt は記事の公開日時です。
+	PublishedAt time.Time
+
+	// FetchedAt はフィード取得日時です。
+	FetchedAt time.Time
 
 	// FeedURL はフィードの取得元URLです。
 	FeedURL string
@@ -19,11 +22,8 @@ type FeedItem struct {
 	// Description は記事の要約です。
 	Description string
 
-	// PublishedAt は記事の公開日時です。
-	PublishedAt time.Time
-
-	// FetchedAt はフィード取得日時です。
-	FetchedAt time.Time
+	// ID はデータベース上の一意な識別子です。
+	ID int64
 }
 
 // Validate はFeedItemの必須フィールドを検証します。

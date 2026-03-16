@@ -39,9 +39,9 @@ func TestPostValidate(t *testing.T) {
 	}
 
 	tests := []struct {
-		name    string
-		modify  func(p *Post)
 		wantErr error
+		modify  func(p *Post)
+		name    string
 	}{
 		{
 			name:    "正常なポスト",

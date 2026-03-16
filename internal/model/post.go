@@ -34,47 +34,20 @@ func (s PostStatus) IsValid() bool {
 // マークダウン原文（Content）とレンダリング済みHTML（HTML）の両方を保持し、
 // frontmatterから抽出されたメタデータ（Title, Tags, Category等）を含みます。
 type Post struct {
-	// ID はデータベース上の一意な識別子です。
-	ID int64
-
-	// Title はポストのタイトルです。
-	Title string
-
-	// Slug はURLに使用されるスラッグです。
-	Slug string
-
-	// Content はマークダウン原文です。
-	Content string
-
-	// HTML はレンダリング済みHTMLです。
-	HTML string
-
-	// Excerpt は一覧表示用の抜粋です。
-	Excerpt string
-
-	// Date は記事の公開日です。
-	Date time.Time
-
-	// Tags はポストに紐づくタグ一覧です。
-	Tags []string
-
-	// Category はポストのカテゴリです。
-	Category string
-
-	// Status はポストの公開状態です。
-	Status PostStatus
-
-	// SourceURL はObsidian元ファイルパスです（Phase 2用）。
-	SourceURL string
-
-	// Mermaid はMermaidコードブロックの含有フラグです。
-	Mermaid bool
-
-	// CreatedAt はレコード作成日時です。
+	Date      time.Time
 	CreatedAt time.Time
-
-	// UpdatedAt はレコード更新日時です。
 	UpdatedAt time.Time
+	Category  string
+	Title     string
+	Slug      string
+	Content   string
+	HTML      string
+	Excerpt   string
+	Status    PostStatus
+	SourceURL string
+	Tags      []string
+	ID        int64
+	Mermaid   bool
 }
 
 // Validate はPostの必須フィールドを検証します。

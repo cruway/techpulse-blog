@@ -15,8 +15,8 @@ func TestFeedItemValidate(t *testing.T) {
 	}
 
 	tests := []struct {
-		name    string
 		modify  func(f *FeedItem)
+		name    string
 		wantErr bool
 	}{
 		{

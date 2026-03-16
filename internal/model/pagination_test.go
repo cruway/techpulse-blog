@@ -7,9 +7,9 @@ import (
 // TestListOptionsValidate はListOptionsのバリデーションをテストします。
 func TestListOptionsValidate(t *testing.T) {
 	tests := []struct {
+		wantErr error
 		name    string
 		opts    ListOptions
-		wantErr error
 	}{
 		{
 			name:    "デフォルト値で正常",

@@ -10,12 +10,6 @@ const (
 
 // ListOptions はポスト一覧取得時のフィルタ・ページネーション条件です。
 type ListOptions struct {
-	// Page はページ番号（1始まり）です。
-	Page int
-
-	// PageSize は1ページあたりの件数です。
-	PageSize int
-
 	// Tag はタグフィルタです。空の場合はフィルタなし。
 	Tag string
 
@@ -27,6 +21,12 @@ type ListOptions struct {
 
 	// SortBy はソートキーです（"date", "title", "updated"）。
 	SortBy string
+
+	// Page はページ番号（1始まり）です。
+	Page int
+
+	// PageSize は1ページあたりの件数です。
+	PageSize int
 
 	// SortDesc がtrueの場合、降順ソートします。
 	SortDesc bool
