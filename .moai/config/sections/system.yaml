@@ -1,0 +1,61 @@
+# System Configuration
+# MoAI-ADKシステムレベル設定
+
+moai:
+  # MoAI-ADKバージョン
+  version: "2.4.7"
+
+  # テンプレートバージョン
+  template_version: "2.4.7"
+
+  # バージョン更新チェック頻度: daily, weekly, never
+  update_check_frequency: daily
+
+  # バージョンチェック設定
+  version_check:
+    enabled: true
+    cache_ttl_hours: 24
+
+# GitHub連携設定
+github:
+  # TRUST 5品質フレームワーク
+  enable_trust_5: true
+
+  # マージ後ブランチ自動削除
+  auto_delete_branches: true
+
+  # SPECワークフロー戦略
+  spec_git_workflow: feature_branch
+
+# ドキュメント管理設定
+document_management:
+  enabled: true
+  enforce_structure: true
+  block_root_pollution: true
+
+  # 分離ポリシー
+  separation_policy:
+    strict_separation: true
+    description: "ログ（ランタイム）とドキュメントの明確な分離"
+    logs_scope: "ランタイムセッション、エラー、実行トレース"
+    docs_scope: "レポート、分析、検証、ドキュメント"
+
+  # ディレクトリ設定
+  directories:
+    docs:
+      base: .moai/docs/
+      retention_days: null
+
+    logs:
+      base: .moai/logs/
+      retention_days: 30
+
+    temp:
+      base: .moai/temp/
+      retention_days: 7
+      auto_cleanup: true
+
+    cache:
+      base: .moai/cache/
+      retention_days: 30
+      auto_cleanup: true

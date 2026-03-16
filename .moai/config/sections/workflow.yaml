@@ -1,0 +1,67 @@
+# Workflow Configuration
+# 実行モード、チーム設定、自動化設定
+
+workflow:
+  # 実行モード: auto, subagent, team
+  execution_mode: "subagent"
+
+  # 自動クリア戦略
+  auto_clear:
+    enabled: true
+    after_plan: true
+    after_run: false
+    token_threshold: 150000
+
+  # フェーズ別トークン予算
+  token_budget:
+    plan: 30000
+    run: 180000
+    sync: 40000
+
+  # Agent Teams設定（個人プロジェクトのため無効）
+  team:
+    enabled: false
+    max_teammates: 10
+    default_model: "inherit"
+    require_plan_approval: true
+    delegate_mode: true
+    teammate_display: "auto"
+
+    auto_selection:
+      min_domains_for_team: 3
+      min_files_for_team: 10
+      min_complexity_score: 7
+
+    patterns:
+      plan_research:
+        roles: [researcher, analyst, architect]
+        model: "inherit"
+        description: "並列SPEC調査と設計"
+
+      implementation:
+        roles: [backend-dev, frontend-dev, tester]
+        model: "inherit"
+        description: "クロスレイヤー機能実装"
+
+      full_stack:
+        roles: [api-layer, ui-layer, data-layer, quality]
+        model: "inherit"
+        description: "フルスタック実装 + 品質ゲート"
+
+      review:
+        roles: [security-reviewer, perf-reviewer, quality-reviewer]
+        model: "inherit"
+        description: "多角的コードレビュー"
+
+  # 完了マーカー
+  completion:
+    markers:
+      done: "<moai>DONE</moai>"
+      complete: "<moai>COMPLETE</moai>"
+    detect_in_output: true
+
+  # ループ防止
+  loop_prevention:
+    max_iterations: 100
+    max_retries_per_operation: 3
+    failure_pattern_detection: true

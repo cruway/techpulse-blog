@@ -36,3 +36,9 @@ node_modules/
 
 # Air
 build-errors.log
+
+# MoAI-ADK（ランタイム・一時ファイル）
+.moai/logs/
+.moai/temp/
+.moai/cache/
+.moai/plans/

@@ -1,0 +1,39 @@
+# Git Strategy Settings
+# ワークフロー設定
+
+git_strategy:
+  mode: "personal"
+  provider: "github"
+  github_username: "cruway"
+
+  # Personal Mode Settings（GitHub個人）
+  personal:
+    workflow: github-flow
+    environment: github
+    github_integration: true
+    push_to_remote: true
+    branch_prefix: "feature/"
+    main_branch: main
+
+    # ブランチ作成ポリシー
+    branch_creation:
+      prompt_always: true
+      auto_enabled: false
+
+    # 自動化設定
+    automation:
+      auto_branch: false
+      auto_commit: true
+      auto_pr: false
+      auto_push: false
+
+    # Gitフック
+    hooks:
+      pre_commit: enforce
+      pre_push: warn
+      commit_msg: warn
+
+    # コミットメッセージスタイル
+    commit_style:
+      format: conventional
+      scope_required: false
