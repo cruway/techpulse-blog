@@ -1,0 +1,34 @@
+# golangci-lint設定
+# https://golangci-lint.run/usage/configuration/
+
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - gosimple
+    - ineffassign
+    - typecheck
+    - misspell
+    - gofmt
+    - goimports
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+  govet:
+    enable-all: true
+  misspell:
+    locale: US
+
+issues:
+  exclude-dirs:
+    - vendor
+    - tmp
+    - bin
+  exclude-files:
+    - ".*_templ\\.go$"

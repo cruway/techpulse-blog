@@ -1,0 +1,18 @@
+# Git Commit Convention Configuration
+# コミットメッセージの検証と強制
+
+git_convention:
+  # 規約: auto, conventional-commits, angular, karma, custom
+  convention: "conventional-commits"
+
+  # push時に規約チェックを強制
+  enforce_on_push: false
+
+  # 自動検出（autoの場合）
+  auto_detect: true
+
+  # ヘッダー最大長
+  max_length: 72
+
+  # 自動検出用サンプルコミット数
+  sample_size: 100

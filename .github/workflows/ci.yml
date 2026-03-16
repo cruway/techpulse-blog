@@ -41,7 +41,7 @@ jobs:
       - name: Go セットアップ
         uses: actions/setup-go@v5
         with:
-          go-version: '1.23'
+          go-version: '1.26'
           cache: true
 
       - name: 依存関係インストール
@@ -84,7 +84,7 @@ jobs:
       - name: Go セットアップ
         uses: actions/setup-go@v5
         with:
-          go-version: '1.23'
+          go-version: '1.26'
           cache: true
 
       - name: 依存関係インストール

@@ -1,82 +1,82 @@
-# 코딩 규칙
+# コーディングルール
 
-> **관련 문서**: [CODE_STYLE.md](./CODE_STYLE.md) | [PR_CHECKLIST.md](./PR_CHECKLIST.md)
+> **関連文書**: [CODE_STYLE.md](./CODE_STYLE.md) | [PR_CHECKLIST.md](./PR_CHECKLIST.md)
 
-TechPulse Blog 프로젝트의 아키텍처, 패턴, 성능, 에러 처리 규칙을 정의합니다.
+TechPulse Blogプロジェクトのアーキテクチャ、パターン、パフォーマンス、エラー処理ルールを定義します。
 
 ---
 
-## 1. 아키텍처 규칙
+## 1. アーキテクチャルール
 
-### 1.1 레이어 분리 원칙
+### 1.1 レイヤー分離原則
 
 ```
-cmd/server/main.go          ← 엔트리포인트
+cmd/server/main.go          ← エントリポイント
     |
-internal/handler/            ← HTTP 핸들러 (요청/응답)
+internal/handler/            ← HTTPハンドラー（リクエスト/レスポンス）
     |
-internal/service/            ← 비즈니스 로직
+internal/service/            ← ビジネスロジック
     |
-internal/repository/         ← 데이터 접근 (SQLite, 파일시스템)
+internal/repository/         ← データアクセス（SQLite、ファイルシステム）
     |
-internal/model/              ← 데이터 모델 (구조체)
+internal/model/              ← データモデル（構造体）
 ```
 
-| 계층 | 패키지 | 허용 의존성 |
+| 階層 | パッケージ | 許可依存性 |
 |------|--------|-------------|
-| Model | `internal/model` | 표준 라이브러리만 |
+| Model | `internal/model` | 標準ライブラリのみ |
 | Repository | `internal/repository` | model |
 | Service | `internal/service` | model, repository |
 | Handler | `internal/handler` | model, service |
 | Markdown | `internal/markdown` | model, goldmark |
 | Search | `internal/search` | model, bleve |
 
-### 1.2 의존성 규칙
+### 1.2 依存性ルール
 
-- **하위 → 상위 의존 금지**: model이 handler를 import하면 안 됨
-- **인터페이스 기반 의존성 주입**: service는 repository 인터페이스에 의존
-- **순환 의존 금지**: 패키지 간 순환 import 불가 (Go 컴파일러가 차단)
+- **下位 → 上位依存禁止**: modelがhandlerをimportしてはならない
+- **インターフェース基盤依存性注入**: serviceはrepositoryインターフェースに依存
+- **循環依存禁止**: パッケージ間循環import不可（Goコンパイラがブロック）
 
 ```go
-// 준수 - 인터페이스 기반
+// 準拠 - インターフェース基盤
 type PostRepository interface {
     FindBySlug(slug string) (*model.Post, error)
     FindAll(opts ListOptions) ([]*model.Post, error)
 }
 
 type PostService struct {
-    repo PostRepository  // 인터페이스 의존
+    repo PostRepository  // インターフェース依存
 }
 ```
 
 ---
 
-## 2. 에러 처리 규칙
+## 2. エラー処理ルール
 
-### 2.1 에러 래핑 필수
+### 2.1 エラーラッピング必須
 
 ```go
-// 위반
+// 違反
 return err
 
-// 준수
-return fmt.Errorf("포스트 조회 실패 (slug=%s): %w", slug, err)
+// 準拠
+return fmt.Errorf("ポスト照会失敗 (slug=%s): %w", slug, err)
 ```
 
-### 2.2 커스텀 에러 타입
+### 2.2 カスタムエラータイプ
 
 ```go
-// 도메인 에러 정의
+// ドメインエラー定義
 var (
-    ErrPostNotFound = errors.New("포스트를 찾을 수 없습니다")
-    ErrInvalidSlug  = errors.New("유효하지 않은 슬러그입니다")
+    ErrPostNotFound = errors.New("ポストが見つかりません")
+    ErrInvalidSlug  = errors.New("無効なスラッグです")
 )
 ```
 
-### 2.3 HTTP 에러 응답
+### 2.3 HTTPエラーレスポンス
 
 ```go
-// handler 레이어에서만 HTTP 상태 코드 결정
+// handlerレイヤーでのみHTTPステータスコード決定
 func (h *PostHandler) GetPost(c echo.Context) error {
     post, err := h.service.GetBySlug(slug)
     if err != nil {
@@ -91,43 +91,43 @@ func (h *PostHandler) GetPost(c echo.Context) error {
 
 ---
 
-## 3. 성능 규칙
+## 3. パフォーマンスルール
 
-### 3.1 마크다운 파싱 캐시
+### 3.1 マークダウンパースキャッシュ
 
-- 파싱된 HTML은 메모리 캐시에 보관
-- 파일 변경 감지 시 캐시 무효화
-- 최대 캐시 크기 설정
+- パース済みHTMLはメモリキャッシュに保管
+- ファイル変更検知時キャッシュ無効化
+- 最大キャッシュサイズ設定
 
-### 3.2 데이터베이스
+### 3.2 データベース
 
-- SQLite WAL 모드 사용 (읽기 성능 향상)
-- 인덱스: slug, date, tags, category
-- 쿼리에 LIMIT/OFFSET 필수
+- SQLite WALモード使用（読み取り性能向上）
+- インデックス: slug, date, tags, category
+- クエリにLIMIT/OFFSET必須
 
-### 3.3 HTTP 성능
+### 3.3 HTTPパフォーマンス
 
-- 정적 파일 캐시 헤더 설정
-- gzip 압축 미들웨어 적용
-- templ 컴포넌트 렌더링 (스트리밍)
+- 静的ファイルキャッシュヘッダー設定
+- gzip圧縮ミドルウェア適用
+- templコンポーネントレンダリング（ストリーミング）
 
 ---
 
-## 4. 테스트 규칙
+## 4. テストルール
 
-### 4.1 테스트 구조
+### 4.1 テスト構造
 
 ```
 internal/
     service/
         post_service.go
-        post_service_test.go    ← 같은 패키지에 테스트
+        post_service_test.go    ← 同一パッケージにテスト
     handler/
         post_handler.go
         post_handler_test.go
 ```
 
-### 4.2 테이블 드리븐 테스트
+### 4.2 テーブルドリブンテスト
 
 ```go
 func TestParseMarkdown(t *testing.T) {
@@ -138,12 +138,12 @@ func TestParseMarkdown(t *testing.T) {
         wantErr bool
     }{
         {
-            name:  "정상적인 포스트",
+            name:  "正常なポスト",
             input: "---\ntitle: test\n---\n# Hello",
             want:  &Post{Title: "test"},
         },
         {
-            name:    "frontmatter 없음",
+            name:    "frontmatterなし",
             input:   "# No frontmatter",
             wantErr: true,
         },
@@ -166,36 +166,36 @@ func TestParseMarkdown(t *testing.T) {
 
 ## 5. Quick Reference
 
-| 항목 | 준수 | 위반 |
+| 項目 | 準拠 | 違反 |
 |------|------|------|
-| 의존성 방향 | handler → service → repo → model | model → handler |
-| 에러 처리 | `fmt.Errorf("...: %w", err)` | `return err` (래핑 없이) |
-| 에러 무시 | 명시적 `_ =` + 주석 | 암묵적 무시 |
-| HTTP 상태 | handler에서만 결정 | service에서 HTTP 코드 반환 |
-| SQL 쿼리 | Prepared statement | 문자열 연결 |
-| 테스트 | 테이블 드리븐 | 단일 케이스 |
+| 依存性方向 | handler → service → repo → model | model → handler |
+| エラー処理 | `fmt.Errorf("...: %w", err)` | `return err`（ラッピングなし） |
+| エラー無視 | 明示的 `_ =` + コメント | 暗黙的無視 |
+| HTTPステータス | handlerでのみ決定 | serviceでHTTPコード返却 |
+| SQLクエリ | Prepared statement | 文字列連結 |
+| テスト | テーブルドリブン | 単一ケース |
 
-### 유용한 명령어
+### 便利なコマンド
 
 ```bash
-# 코드 포맷팅
+# コードフォーマット
 gofmt -w .
 goimports -w .
 
-# 정적 분석
+# 静的解析
 golangci-lint run
 
-# 테스트 실행
+# テスト実行
 go test ./...
 
-# 테스트 커버리지
+# テストカバレッジ
 go test -cover ./...
 go test -coverprofile=coverage.out ./...
 go tool cover -html=coverage.out
 
-# templ 코드 생성
+# templコード生成
 templ generate
 
-# 빌드
+# ビルド
 go build -o bin/server ./cmd/server
 ```

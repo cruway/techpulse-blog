@@ -1,15 +1,15 @@
-# 코드 스타일 규칙
+# コードスタイルルール
 
-> **관련 문서**: [CODING_RULES.md](./CODING_RULES.md) | [PR_CHECKLIST.md](./PR_CHECKLIST.md)
+> **関連文書**: [CODING_RULES.md](./CODING_RULES.md) | [PR_CHECKLIST.md](./PR_CHECKLIST.md)
 
 ---
 
-## 1. 주석 언어
+## 1. コメント言語
 
-- **모든 코드 주석은 일본어로 작성**
-- 함수/구조체/인터페이스 문서 주석 포함
-- 인라인 주석 포함
-- 예외: 외부 라이브러리 인터페이스 구현 시 영문 유지 가능
+- **全てのコードコメントは日本語で作成**
+- 関数/構造体/インターフェースドキュメントコメントを含む
+- インラインコメントを含む
+- 例外: 外部ライブラリインターフェース実装時は英文維持可能
 
 ```go
 // PostServiceはブログポストのCRUD操作を処理します。
@@ -35,63 +35,63 @@ func (s *PostService) GetBySlug(slug string) (*Post, error) {
 
 ---
 
-## 2. 네이밍 규칙
+## 2. ネーミング規則
 
-| 대상 | 규칙 | 예시 |
+| 対象 | 規則 | 例 |
 |------|------|------|
-| 패키지 | lowercase | `handler`, `service`, `model` |
-| 구조체/인터페이스 | PascalCase | `PostService`, `SearchEngine` |
-| 공개 함수/메서드 | PascalCase | `GetBySlug`, `ParseMarkdown` |
-| 비공개 함수/메서드 | camelCase | `parseContent`, `buildIndex` |
-| 상수 | PascalCase 또는 camelCase | `MaxPageSize`, `defaultTimeout` |
-| 파일 | snake_case | `post_handler.go`, `feed_service.go` |
-| 테스트 파일 | snake_case + _test | `post_handler_test.go` |
+| パッケージ | lowercase | `handler`, `service`, `model` |
+| 構造体/インターフェース | PascalCase | `PostService`, `SearchEngine` |
+| 公開関数/メソッド | PascalCase | `GetBySlug`, `ParseMarkdown` |
+| 非公開関数/メソッド | camelCase | `parseContent`, `buildIndex` |
+| 定数 | PascalCaseまたはcamelCase | `MaxPageSize`, `defaultTimeout` |
+| ファイル | snake_case | `post_handler.go`, `feed_service.go` |
+| テストファイル | snake_case + _test | `post_handler_test.go` |
 
 ---
 
-## 3. Go 코드 포맷팅
+## 3. Goコードフォーマット
 
-- `gofmt` / `goimports` 필수 적용
-- `golangci-lint` 정적 분석 통과
+- `gofmt` / `goimports` 必須適用
+- `golangci-lint` 静的解析通過
 
 ---
 
-## 4. 품질 규칙
+## 4. 品質ルール
 
-### 하드코딩 금지
+### ハードコーディング禁止
 
 ```go
-// 위반
+// 違反
 if pageSize > 20 { ... }
 
-// 준수
+// 準拠
 const MaxPageSize = 20
 if pageSize > MaxPageSize { ... }
 ```
 
-### 에러 처리 필수
+### エラー処理必須
 
 ```go
-// 위반
+// 違反
 result, _ := doSomething()
 
-// 준수
+// 準拠
 result, err := doSomething()
 if err != nil {
-    return fmt.Errorf("작업 실패: %w", err)
+    return fmt.Errorf("操作失敗: %w", err)
 }
 ```
 
-### 공개 API 문서화
+### 公開API文書化
 
 ```go
-// 위반 - 문서 없음
+// 違反 - ドキュメントなし
 func ParseMarkdown(content []byte) (*Post, error) { ... }
 
-// 준수
-// ParseMarkdown은 마크다운 콘텐츠를 파싱하여 Post 구조체로 변환합니다.
+// 準拠
+// ParseMarkdownはマークダウンコンテンツをパースしてPost構造体に変換します。
 //
-// frontmatter(YAML)와 본문을 분리하여 처리합니다.
-// Mermaid 코드 블록은 클라이언트 렌더링용으로 보존됩니다.
+// frontmatter(YAML)と本文を分離して処理します。
+// Mermaidコードブロックはクライアントレンダリング用に保存されます。
 func ParseMarkdown(content []byte) (*Post, error) { ... }
 ```

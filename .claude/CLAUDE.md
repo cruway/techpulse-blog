@@ -1,84 +1,84 @@
-# TechPulse Blog 프로젝트 규칙
+# TechPulse Blog プロジェクトルール
 
-## 핵심 원칙
+## 核心原則
 
-1. **이슈 기반 작업**: 모든 작업은 이슈 생성 후 시작
-2. **PR 머지 승인 필수**: Claude는 사용자의 명시적 승인 없이 PR을 머지하지 않음
-3. **문서화 필수**: 모든 PR에 Mermaid 다이어그램 및 변경 이력 문서 포함
-4. **일본어 주석**: 모든 코드 주석, 커밋 메시지, 이슈/PR 내용은 일본어로 작성
+1. **Issue基盤作業**: 全ての作業はIssue作成後に開始
+2. **PRマージ承認必須**: Claudeはユーザーの明示的承認なしにPRをマージしない
+3. **ドキュメント化必須**: 全てのPRにMermaidダイアグラム及び変更履歴ドキュメントを含む
+4. **日本語コメント**: 全てのコードコメント、コミットメッセージ、Issue/PR内容は日本語で作成
 
-## Claude 자동 작업 제한 (절대 규칙)
+## Claude自動作業制限（絶対ルール）
 
-| 작업 | 승인 필요 |
+| 作業 | 承認必要 |
 |------|----------|
-| PR 머지 | 필수 |
-| 브랜치 삭제 | 필수 |
-| main 브랜치 push | 필수 |
-| 이슈 닫기 | 필수 |
-| force push | 필수 |
+| PRマージ | 必須 |
+| ブランチ削除 | 必須 |
+| mainブランチpush | 必須 |
+| Issueクローズ | 必須 |
+| force push | 必須 |
 
-## 프로젝트 정보
+## プロジェクト情報
 
-- **저장소**: cruway/techpulse-blog
-- **언어**: Go (Echo + templ + HTMX)
-- **프론트엔드**: HTMX + Tailwind CSS
+- **リポジトリ**: cruway/techpulse-blog
+- **言語**: Go (Echo + templ + HTMX)
+- **フロントエンド**: HTMX + Tailwind CSS
 - **DB**: SQLite
-- **검색**: Bleve
-- **인프라**: Oracle Cloud (Always Free)
+- **検索**: Bleve
+- **インフラ**: Oracle Cloud (Always Free)
 
-## Status 워크플로우
+## Statusワークフロー
 
 ```
 Backlog → Todo → In progress → Done
 ```
-- Todo 우선 소진 → In progress 완료 → Backlog에서 다음 Epic 승격
-- Epic: Backlog(대기) → In progress(활성) → Done
-- Feat: Todo(대기) → In progress(구현중) → Done
+- Todo優先消化 → In progress完了 → Backlogから次のEpic昇格
+- Epic: Backlog(待機) → In progress(活性) → Done
+- Feat: Todo(待機) → In progress(実装中) → Done
 
-## 이슈 타입 / 크기 기준
+## Issueタイプ / サイズ基準
 
-| 타입 | 용도 | | 크기 | 작업량 |
+| タイプ | 用途 | | サイズ | 作業量 |
 |------|------|-|------|--------|
-| [Epic] | Phase 단위 | | XS | < 2시간 |
-| [Feat] | 기능 구현 | | S | 반나절 |
-| [Fix] | 버그 수정 | | M | 1일 |
-| [Chore] | CI, 설정 | | L | 1.5~2일 |
-| [Docs] | 문서 | | XL | > 3일 (분할) |
-| [Refactor] | 리팩토링 | | | |
-| [Test] | 테스트 | | | |
+| [Epic] | Phase単位 | | XS | < 2時間 |
+| [Feat] | 機能実装 | | S | 半日 |
+| [Fix] | バグ修正 | | M | 1日 |
+| [Chore] | CI、設定 | | L | 1.5〜2日 |
+| [Docs] | ドキュメント | | XL | > 3日（分割） |
+| [Refactor] | リファクタリング | | | |
+| [Test] | テスト | | | |
 
-## GitHub MCP 도구 우선 사용
+## GitHub MCPツール優先使用
 
-GitHub MCP 서버가 연결되어 있으므로, 이슈/PR 관련 작업은 **MCP 도구를 우선 사용**합니다.
+GitHub MCPサーバーが接続されているため、Issue/PR関連作業は**MCPツールを優先使用**します。
 
-| 작업 | MCP 도구 | 비고 |
+| 作業 | MCPツール | 備考 |
 |------|----------|------|
-| 이슈 조회 | `mcp__github__issue_read` | `gh issue view` 대체 |
-| 이슈 생성/수정 | `mcp__github__issue_write` | `gh issue create/edit` 대체 |
-| 이슈 검색 | `mcp__github__search_issues` | `gh search issues` 대체 |
-| Sub-issue 연결 | `mcp__github__sub_issue_write` | `gh api graphql` 뮤테이션 대체 |
-| PR 생성 | `mcp__github__create_pull_request` | `gh pr create` 대체 |
-| PR 조회 | `mcp__github__pull_request_read` | `gh pr view` 대체 |
-| PR 머지 | `mcp__github__merge_pull_request` | `gh pr merge` 대체 |
-| PR 수정 | `mcp__github__update_pull_request` | `gh pr edit` 대체 |
-| 라벨 조회 | `mcp__github__get_label` | `gh label list` 대체 |
-| 코드 검색 | `mcp__github__search_code` | `gh search code` 대체 |
+| Issue照会 | `mcp__github__issue_read` | `gh issue view` 代替 |
+| Issue作成/修正 | `mcp__github__issue_write` | `gh issue create/edit` 代替 |
+| Issue検索 | `mcp__github__search_issues` | `gh search issues` 代替 |
+| Sub-issue連結 | `mcp__github__sub_issue_write` | `gh api graphql` ミューテーション代替 |
+| PR作成 | `mcp__github__create_pull_request` | `gh pr create` 代替 |
+| PR照会 | `mcp__github__pull_request_read` | `gh pr view` 代替 |
+| PRマージ | `mcp__github__merge_pull_request` | `gh pr merge` 代替 |
+| PR修正 | `mcp__github__update_pull_request` | `gh pr edit` 代替 |
+| ラベル照会 | `mcp__github__get_label` | `gh label list` 代替 |
+| コード検索 | `mcp__github__search_code` | `gh search code` 代替 |
 
-**`gh` CLI를 계속 사용해야 하는 영역** (MCP 미지원):
-- GitHub Projects v2 필드 편집 (`gh project item-edit`)
-- 프로젝트에 이슈 추가 (`gh project item-add`)
-- 마일스톤 생성 (`gh api repos/.../milestones`)
-- PR checks 확인 (`gh pr checks`)
+**`gh` CLIを継続使用する領域**（MCP未対応）:
+- GitHub Projects v2フィールド編集 (`gh project item-edit`)
+- プロジェクトにIssue追加 (`gh project item-add`)
+- マイルストーン作成 (`gh api repos/.../milestones`)
+- PR checks確認 (`gh pr checks`)
 
-## 참조 문서 (필요시 Read로 로딩)
+## 参照ドキュメント（必要時Readでロード）
 
-| 분류 | 파일 | 자동 로딩 |
+| 分類 | ファイル | 自動ロード |
 |------|------|----------|
-| **코드 스타일** | .claude/rules/CODE_STYLE.md | 항상 |
-| **코딩 규칙** | .claude/rules/CODING_RULES.md | Go 파일 작업시 |
-| **Git 워크플로우** | .claude/rules/GIT_WORKFLOW.md | 항상 |
-| **PR 체크리스트** | .claude/rules/PR_CHECKLIST.md | 이슈/PR 작업시 |
-| **프로젝트 필드** | .claude/rules/PROJECT_FIELDS.md | 이슈/PR 작업시 |
-| **작업 분할** | .claude/rules/EPIC_STORY.md | 이슈/PR 작업시 |
-| **CLI 명령어** | .claude/rules/CLI_COMMANDS.md | 이슈/PR 작업시 |
-| **라벨** | .claude/rules/LABELS.md | 이슈/PR 작업시 |
+| **コードスタイル** | .claude/rules/CODE_STYLE.md | 常時 |
+| **コーディングルール** | .claude/rules/CODING_RULES.md | Goファイル作業時 |
+| **Gitワークフロー** | .claude/rules/GIT_WORKFLOW.md | 常時 |
+| **PRチェックリスト** | .claude/rules/PR_CHECKLIST.md | Issue/PR作業時 |
+| **プロジェクトフィールド** | .claude/rules/PROJECT_FIELDS.md | Issue/PR作業時 |
+| **作業分割** | .claude/rules/EPIC_STORY.md | Issue/PR作業時 |
+| **CLIコマンド** | .claude/rules/CLI_COMMANDS.md | Issue/PR作業時 |
+| **ラベル** | .claude/rules/LABELS.md | Issue/PR作業時 |

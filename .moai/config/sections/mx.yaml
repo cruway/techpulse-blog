@@ -1,0 +1,84 @@
+# @MX TAG System Configuration
+# Go特化設定
+
+mx:
+  version: "2.1"
+
+  # 言語設定（Go特化）
+  languages:
+    go:
+      enabled: true
+      patterns: ["*.go"]
+      exclude: ["*_generated.go", "vendor/**", "**/mock_*.go", "*_templ.go"]
+      warn_patterns:
+        - pattern: "go func"
+          description: "context.Contextなしのgoroutine実行"
+        - pattern: "go "
+          description: "goroutineライフサイクルリスク"
+
+  # コメント構文
+  comment_syntax:
+    "//": [go]
+
+  # グローバル除外パターン
+  exclude:
+    - "**/*_generated.*"
+    - "**/vendor/**"
+    - "**/node_modules/**"
+    - "**/bin/**"
+    - "**/tmp/**"
+    - "**/.git/**"
+    - "**/*_templ.go"
+
+  # ファイル別制限
+  limits:
+    anchor_per_file: 3
+    warn_per_file: 5
+    note_per_file: 10
+    todo_per_file: 5
+
+  # タグ閾値
+  thresholds:
+    fan_in_anchor: 3
+    complexity_warn: 15
+    branch_warn: 8
+    line_count_warn: 500
+
+  # Phase 0: コードベース探索
+  discovery:
+    enabled: true
+    load_project_docs: true
+    project_doc_paths:
+      - ".moai/project/tech.md"
+      - ".moai/project/structure.md"
+      - "README.md"
+
+  # 自動タグ付け
+  auto_tag: true
+
+  # REASON必須タグ
+  require_reason_for:
+    - ANCHOR
+    - WARN
+
+  # タグ生成オプション
+  tag_generation:
+    add_auto_prefix: true
+    respect_code_comments: true
+    validate_existing: true
+
+  # バッチスキャン設定
+  scanning:
+    batch_size: 50
+    auto_commit: true
+    commit_message_template: "chore(mx): batch {N}/{M} - @MXタグ追加 ({lang})"
+    resume_enabled: true
+    progress_file: ".moai/cache/mx-scan-progress.json"
+    max_consecutive_failures: 3
+
+  # レポート生成
+  reporting:
+    include_language_breakdown: true
+    include_priority_breakdown: true
+    include_file_list: true
+    show_attention_required: true

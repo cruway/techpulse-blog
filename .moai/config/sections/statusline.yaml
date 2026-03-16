@@ -1,0 +1,17 @@
+# Statusline Configuration
+# ステータスライン表示設定
+
+statusline:
+  # プリセット: full, compact, minimal, custom
+  preset: "full"
+
+  # セグメント個別切替
+  segments:
+    model: true
+    context: true
+    output_style: true
+    directory: true
+    git_status: true
+    claude_version: true
+    moai_version: true
+    git_branch: true

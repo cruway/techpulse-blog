@@ -1,45 +1,45 @@
-# Git 워크플로우
+# Gitワークフロー
 
-> **관련 문서**: [PR_CHECKLIST.md](./PR_CHECKLIST.md)
+> **関連文書**: [PR_CHECKLIST.md](./PR_CHECKLIST.md)
 
-모든 작업은 다음 규칙을 따릅니다:
+全ての作業は以下のルールに従います:
 
-## 0. Status 워크플로우 (Backlog → Todo → In progress → Done)
+## 0. Statusワークフロー (Backlog → Todo → In progress → Done)
 
 ```
 Backlog ──→ Todo ──→ In progress ──→ Done
-(비활성 Epic)  (작업 대기)  (진행중)       (완료)
+(非活性Epic)  (作業待機)  (進行中)       (完了)
 ```
 
-1. **Todo 항목 우선 소진**: Todo에 있는 모든 Feat를 먼저 완료한다
-2. **In progress 완료**: 현재 진행중인 모든 작업을 Done으로 처리한다
-3. **Backlog에서 승격**: Todo와 In progress가 모두 비어야 Backlog에서 다음 Epic을 가져온다
-4. **Epic 단위 이동**: Backlog → In progress로 Epic 이동 시, 하위 Feat들을 Todo에 배치한다
+1. **Todo項目優先消化**: Todoにある全てのFeatを先に完了する
+2. **In progress完了**: 現在進行中の全ての作業をDoneに処理する
+3. **Backlogから昇格**: TodoとIn progressが全て空になってからBacklogから次のEpicを取得する
+4. **Epic単位移動**: Backlog → In progressにEpic移動時、下位FeatをTodoに配置する
 
-## 1. 이슈 생성
+## 1. Issue作成
 
-> **GitHub MCP 도구 우선**: `mcp__github__issue_write`, `mcp__github__issue_read` 사용
+> **GitHub MCPツール優先**: `mcp__github__issue_write`, `mcp__github__issue_read` 使用
 
-- **이슈 제목**: `[타입] 제목` (이슈 번호 붙이지 않음)
-- **PR 제목과 구분**: PR 제목만 `(#이슈번호)` 포함
+- **Issueタイトル**: `[タイプ] タイトル`（Issue番号は付けない）
+- **PRタイトルと区別**: PRタイトルのみ `(#Issue番号)` を含む
 
-| 타입 | 용도 |
+| タイプ | 用途 |
 |------|------|
-| [Epic] | Phase 단위 |
-| [Feat] | 기능 구현 |
-| [Fix] | 버그 수정 |
-| [Chore] | CI, 설정 |
-| [Docs] | 문서 |
-| [Refactor] | 리팩토링 |
-| [Test] | 테스트 |
+| [Epic] | Phase単位 |
+| [Feat] | 機能実装 |
+| [Fix] | バグ修正 |
+| [Chore] | CI、設定 |
+| [Docs] | ドキュメント |
+| [Refactor] | リファクタリング |
+| [Test] | テスト |
 
-## 2. 브랜치 관리
+## 2. ブランチ管理
 
-- 명명: `feature/{이슈번호}-{간단한설명}` (예: `feature/3-blog-engine-mvp`)
-- main 직접 커밋 금지
-- 머지 후 자동 삭제
+- 命名: `feature/{Issue番号}-{簡単な説明}` (例: `feature/3-blog-engine-mvp`)
+- main直接コミット禁止
+- マージ後自動削除
 
-## 3. 커밋
+## 3. コミット
 
 ```
 type: 簡単な説明
@@ -48,40 +48,40 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 ```
 
 type: feat, fix, docs, style, refactor, test, chore
-- 커밋 메시지는 일본어로 작성 (type은 영어)
+- コミットメッセージは日本語で作成（typeは英語）
 
-## 4. PR 생성
+## 4. PR作成
 
-> **MCP 도구 우선**: `mcp__github__create_pull_request`, `mcp__github__merge_pull_request`
+> **MCPツール優先**: `mcp__github__create_pull_request`, `mcp__github__merge_pull_request`
 
-- PR 제목: `[타입] 간단한 설명 (#이슈번호)`
-- 이슈 연결: `Closes #이슈번호`
-- 필수: Assignees (cruway), Labels
-- Mermaid 다이어그램 필수
+- PRタイトル: `[タイプ] 簡単な説明 (#Issue番号)`
+- Issue連結: `Closes #Issue番号`
+- 必須: Assignees (cruway), Labels
+- Mermaidダイアグラム必須
 
-## 5. 머지
+## 5. マージ
 
-- CI 통과 필수
-- **사용자 승인 필수** — Claude는 절대 임의로 머지하지 않음
-- Squash merge 권장
+- CI通過必須
+- **ユーザー承認必須** — Claudeは絶対に任意でマージしない
+- Squash merge推奨
 
-## 6. 완료 처리
+## 6. 完了処理
 
-### 6-1. Feat 완료 (PR 머지 직후 — Claude 자동 실행)
+### 6-1. Feat完了（PRマージ直後 — Claude自動実行）
 
-1. Feat 이슈 체크박스 완료
-2. 상위 Epic 체크박스 업데이트
-3. 프로젝트 필드 갱신: Status → Done
+1. Feat Issueチェックボックス完了
+2. 上位Epicチェックボックス更新
+3. プロジェクトフィールド更新: Status → Done
 
-### 6-2. Epic 완료 (모든 Feat 완료 시 — 사용자 승인 후)
+### 6-2. Epic完了（全Feat完了時 — ユーザー承認後）
 
-1. Epic 완료 조건 체크박스 업데이트
-2. Epic 이슈 닫기 (사용자 승인 필수)
+1. Epic完了条件チェックボックス更新
+2. Epic Issueクローズ（ユーザー承認必須）
 
-## CI 체크 항목
+## CIチェック項目
 
-- 코드 포맷팅 (`gofmt`)
-- 정적 분석 (`golangci-lint`)
-- 테스트 (`go test ./...`)
-- templ 생성 (`templ generate`)
-- 빌드 (`go build`)
+- コードフォーマット (`gofmt`)
+- 静的解析 (`golangci-lint`)
+- テスト (`go test ./...`)
+- templ生成 (`templ generate`)
+- ビルド (`go build`)
